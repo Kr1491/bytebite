@@ -6,6 +6,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import restaurantRoutes from "./routes/restaurantRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -23,7 +25,8 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/cart", cartRoutes);
 
-// connect mongo
+app.use("/api/orders", orderRoutes);
+app.use("/api/auth", authRoutes);
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://localhost:27017/bytebite")
   .then(() => console.log("MongoDB connected"))
