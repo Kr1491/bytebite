@@ -18,10 +18,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// serve images
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-// routes
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/cart", cartRoutes);
 
