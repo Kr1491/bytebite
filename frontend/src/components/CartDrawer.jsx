@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import CheckoutModal from "./CheckoutModal";
 import "../index.css";
 
 const CartDrawer = ({ cart, onClose }) => {
-  // group items and count quantity
+  const [showCheckout, setShowCheckout] = useState(false);
+
   const grouped = cart.reduce((acc, item) => {
     const key = item._id;
     if (!acc[key]) acc[key] = { ...item, qty: 0 };
@@ -44,11 +46,20 @@ const CartDrawer = ({ cart, onClose }) => {
             ))}
             <div className="cart-summary">
               <h3>Total: ₹{total}</h3>
-              <button className="checkout-btn">Proceed to Checkout</button>
+              <button
+                className="checkout-btn"
+                onClick={() => setShowCheckout(true)}
+              >
+                Proceed to Checkout
+              </button>
             </div>
           </div>
         )}
       </div>
+
+      {showCheckout && (
+        <CheckoutModal total={total} onClose={() => setShowCheckout(false)} />
+      )}
     </div>
   );
 };
