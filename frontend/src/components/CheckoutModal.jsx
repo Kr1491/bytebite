@@ -2,20 +2,44 @@ import React from "react";
 import axios from "axios";
 import "../index.css";
 
-const CheckoutModal = ({ total, onClose, cart, userEmail }) => {
+const CheckoutModal = ({ total, onClose, cart, clearCart }) => {
+  
   const handlePayment = async () => {
     try {
-      const orderData = {
+      if (!cart || cart.length === 0) {
+        alert("Cart is empty");
+        return;
+      }
+
+      const userEmail = localStorage.getItem("userEmail");
+      if (!userEmail) {
+        alert("Please login first");
+        return;
+      }
+
+      const payload = {
         userEmail,
-        items: cart,
-        total,
+        items: cart.map(item => ({
+          name: item.name,
+          price: item.price,
+          qty: item.qty
+        })),
+        total: total,          // FIXED
+        deliveryFee: 20
       };
-      await axios.post("http://localhost:5000/api/orders", orderData);
-      alert("✅ Payment successful! Order placed.");
+
+      console.log("Sending Payload:", payload);
+
+      const res = await axios.post("http://localhost:5001/api/orders", payload);
+
+      alert("Order placed successfully!");
+
+      clearCart(); // FIXED — clear cart after successful order
       onClose();
-    } catch (err) {
-      console.error(err);
-      alert("❌ Error placing order.");
+      
+    } catch (error) {
+      console.error("Order Error:", error.response?.data || error);
+      alert("Error placing order");
     }
   };
 
@@ -23,6 +47,7 @@ const CheckoutModal = ({ total, onClose, cart, userEmail }) => {
     <div className="modal-overlay">
       <div className="modal checkout-modal">
         <button className="close-btn" onClick={onClose}>✖</button>
+
         <h2>Order Summary</h2>
         <p className="checkout-desc">Review your order details before making payment</p>
 
@@ -31,10 +56,12 @@ const CheckoutModal = ({ total, onClose, cart, userEmail }) => {
             <span>Subtotal</span>
             <span>₹{total}</span>
           </div>
+
           <div className="checkout-row">
             <span>Delivery Fee</span>
             <span>₹20</span>
           </div>
+
           <div className="checkout-row total">
             <span>Total Payable</span>
             <span>₹{total + 20}</span>

@@ -1,81 +1,113 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import "../index.css";
+import "./AuthModal.css";
 
-const AuthModal = ({ onClose, setUserEmail }) => {
+const AuthModal = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const endpoint = isLogin ? "login" : "signup";
-    const payload = isLogin ? { email, password } : { name, email, password };
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
     try {
-      const res = await axios.post(`http://localhost:5000/api/auth/${endpoint}`, payload);
-      alert(isLogin ? "✅ Login successful" : "✅ Signup successful");
-      setUserEmail(email);
+      // Validate signup passwords
+      if (!isLogin && form.password !== form.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
+      const url = isLogin
+        ? "http://localhost:5001/api/auth/login"
+        : "http://localhost:5001/api/auth/signup";
+
+      const payload = isLogin
+        ? { email: form.email, password: form.password }
+        : { name: form.name, email: form.email, password: form.password };
+
+      const response = await axios.post(url, payload);
+
+      alert(response.data.message);
+
+      // 🟢 Save logged-in user's email for order placement
+      if (isLogin) {
+        localStorage.setItem("userEmail", form.email);
+      }
+
+      // Close modal after success
       onClose();
     } catch (err) {
-      alert("❌ Authentication failed. Try again.");
+      console.error(err);
+      alert(err.response?.data?.error || "Authentication failed");
     }
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal auth-modal">
-        <button className="close-btn" onClick={onClose}>✖</button>
-        <h2>Welcome to Byte Bite</h2>
-        <p>Login or create an account to continue ordering</p>
+    <div className="auth-overlay">
+      <div className="auth-box">
 
-        <div className="auth-toggle">
-          <button
-            className={isLogin ? "active" : ""}
-            onClick={() => setIsLogin(true)}
-          >
-            Login
-          </button>
-          <button
-            className={!isLogin ? "active" : ""}
-            onClick={() => setIsLogin(false)}
-          >
-            Sign Up
-          </button>
-        </div>
+        <h2>{isLogin ? "Login" : "Create an Account"}</h2>
 
-        <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          )}
+        {/* Signup Name Field */}
+        {!isLogin && (
           <input
-            type="email"
-            placeholder="your.email@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            type="text"
+            name="name"
+            className="auth-input"
+            placeholder="Full Name"
+            onChange={handleChange}
           />
+        )}
+
+        <input
+          type="email"
+          name="email"
+          className="auth-input"
+          placeholder="Email Address"
+          onChange={handleChange}
+        />
+
+        <input
+          type="password"
+          name="password"
+          className="auth-input"
+          placeholder="Password"
+          onChange={handleChange}
+        />
+
+        {/* Confirm Password Only for Signup */}
+        {!isLogin && (
           <input
             type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            name="confirmPassword"
+            className="auth-input"
+            placeholder="Confirm Password"
+            onChange={handleChange}
           />
-          <button type="submit" className="login-btn">
-            {isLogin ? "Login" : "Sign Up"}
-          </button>
-        </form>
+        )}
+
+        <button className="auth-button" onClick={handleSubmit}>
+          {isLogin ? "Login" : "Signup"}
+        </button>
+
+        <p className="toggle-text" onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "New user? Sign up" : "Already have an account? Login"}
+        </p>
+
+        <button className="close-btn" onClick={onClose}>
+          ✕
+        </button>
+
       </div>
     </div>
   );
 };
 
-export default AuthModal;  // ✅ Make sure this line exists
+export default AuthModal;
