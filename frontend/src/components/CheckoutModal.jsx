@@ -2,10 +2,12 @@ import React from "react";
 import axios from "axios";
 import "../index.css";
 
-const CheckoutModal = ({ total, onClose, cart, clearCart }) => {
-  
+const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
+
   const handlePayment = async () => {
     try {
+      console.log("CheckoutModal received cart:", cart);
+
       if (!cart || cart.length === 0) {
         alert("Cart is empty");
         return;
@@ -17,26 +19,28 @@ const CheckoutModal = ({ total, onClose, cart, clearCart }) => {
         return;
       }
 
+      // FIX: Ensure qty exists
+      const items = cart.map(item => ({
+        name: item.name,
+        price: item.price,
+        qty: item.qty ?? 1   // fallback if qty missing
+      }));
+
       const payload = {
         userEmail,
-        items: cart.map(item => ({
-          name: item.name,
-          price: item.price,
-          qty: item.qty
-        })),
-        total: total,          // FIXED
+        items,
+        total,
         deliveryFee: 20
       };
 
       console.log("Sending Payload:", payload);
 
-      const res = await axios.post("http://localhost:5001/api/orders", payload);
+      await axios.post("http://localhost:5001/api/orders", payload);
 
       alert("Order placed successfully!");
-
-      clearCart(); // FIXED — clear cart after successful order
+      clearCart();
       onClose();
-      
+
     } catch (error) {
       console.error("Order Error:", error.response?.data || error);
       alert("Error placing order");
@@ -46,6 +50,7 @@ const CheckoutModal = ({ total, onClose, cart, clearCart }) => {
   return (
     <div className="modal-overlay">
       <div className="modal checkout-modal">
+
         <button className="close-btn" onClick={onClose}>✖</button>
 
         <h2>Order Summary</h2>
@@ -73,6 +78,7 @@ const CheckoutModal = ({ total, onClose, cart, clearCart }) => {
             Pay Now
           </button>
         </div>
+
       </div>
     </div>
   );
