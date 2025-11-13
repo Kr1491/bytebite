@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import CheckoutModal from "./CheckoutModal";
 import "../index.css";
 
-const CartDrawer = ({ cart, onClose }) => {
+const CartDrawer = ({ cart, clearCart, onClose }) => {
   const [showCheckout, setShowCheckout] = useState(false);
 
+  // Group cart items
   const grouped = cart.reduce((acc, item) => {
     const key = item._id;
     if (!acc[key]) acc[key] = { ...item, qty: 0 };
@@ -12,6 +13,8 @@ const CartDrawer = ({ cart, onClose }) => {
     return acc;
   }, {});
   const items = Object.values(grouped);
+
+  // Calculate total once
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   return (
@@ -44,6 +47,7 @@ const CartDrawer = ({ cart, onClose }) => {
                 </span>
               </div>
             ))}
+
             <div className="cart-summary">
               <h3>Total: ₹{total}</h3>
               <button
@@ -58,7 +62,12 @@ const CartDrawer = ({ cart, onClose }) => {
       </div>
 
       {showCheckout && (
-        <CheckoutModal total={total} onClose={() => setShowCheckout(false)} />
+        <CheckoutModal
+          total={total}
+          cart={cart}
+          clearCart={clearCart}
+          onClose={() => setShowCheckout(false)}
+        />
       )}
     </div>
   );

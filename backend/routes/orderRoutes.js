@@ -1,34 +1,30 @@
 import express from "express";
-import Order from "../models/Order.js";
+import Order from "../models/order.js";
 
 const router = express.Router();
 
-// Place order
 router.post("/", async (req, res) => {
-  console.log("REQ BODY:", req.body);
   try {
-    const { userEmail, items, subtotal, deliveryFee, finalAmount } = req.body;
+    const { userEmail, items, total, deliveryFee } = req.body;
 
-    if (!userEmail || !items?.length || !subtotal || !finalAmount) {
-      return res.status(400).json({
-        error: "Missing required order details",
-      });
+    if (!userEmail || !items || items.length === 0 || !total) {
+      return res.status(400).json({ error: "Missing required order details" });
     }
 
-    const newOrder = new Order({
+    const order = new Order({
       userEmail,
       items,
-      subtotal,
+      subtotal: total,
       deliveryFee: deliveryFee ?? 20,
-      finalAmount,
+      finalAmount: total + (deliveryFee ?? 20),
     });
 
-    await newOrder.save();
+    await order.save();
 
-    res.status(201).json({ message: "Order placed successfully!" });
+    res.json({ message: "Order stored", order });
   } catch (error) {
-    console.error("Order error:", error);
-    res.status(500).json({ error: "Server error while placing order" });
+    console.error("Order creation error:", error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

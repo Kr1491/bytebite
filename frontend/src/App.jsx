@@ -51,7 +51,13 @@ const App = () => {
         </div>
       </section>
 
-      {showCart && <CartDrawer cart={cart} onClose={() => setShowCart(false)} />}
+      {showCart && (
+        <CartDrawer
+          cart={cart}
+          clearCart={() => setCart([])}
+          onClose={() => setShowCart(false)}
+        />
+      )}
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
       {showMenu && (
         <MenuModal

@@ -15,6 +15,7 @@ const orderSchema = new mongoose.Schema(
       },
     ],
 
+    // This now stores your "total" from frontend
     subtotal: {
       type: Number,
       required: true,
@@ -25,6 +26,7 @@ const orderSchema = new mongoose.Schema(
       default: 20,
     },
 
+    // Auto-calculated final amount
     finalAmount: {
       type: Number,
       required: true,
@@ -38,5 +40,4 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Order = mongoose.model("Order", orderSchema);
-export default Order;
+export default mongoose.model("Order", orderSchema);
