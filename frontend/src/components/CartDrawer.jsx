@@ -7,22 +7,29 @@ const CartDrawer = ({ cart, clearCart, onClose }) => {
 
   // Group cart items
   const grouped = cart.reduce((acc, item) => {
-    const key = item._id;
+    const key = item._id || item.name;
     if (!acc[key]) acc[key] = { ...item, qty: 0 };
     acc[key].qty += 1;
     return acc;
   }, {});
+
   const items = Object.values(grouped);
 
-  // Calculate total once
+  // Calculate total
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+  const handleCheckoutClick = () => {
+    if (!localStorage.getItem("userEmail")) {
+      alert("Please login first");
+      return;
+    }
+    setShowCheckout(true);
+  };
 
   return (
     <div className="drawer-overlay">
       <div className="drawer">
-        <button className="close-btn" onClick={onClose}>
-          ✖
-        </button>
+        <button className="close-btn" onClick={onClose}>✖</button>
 
         <h2>Your Cart</h2>
         <p>Review your items and proceed to checkout</p>
@@ -35,7 +42,7 @@ const CartDrawer = ({ cart, clearCart, onClose }) => {
         ) : (
           <div className="cart-items">
             {items.map((item) => (
-              <div key={item._id} className="cart-item">
+              <div key={item._id || item.name} className="cart-item">
                 <div className="cart-item-info">
                   <h4>{item.name}</h4>
                   <p>
@@ -50,10 +57,9 @@ const CartDrawer = ({ cart, clearCart, onClose }) => {
 
             <div className="cart-summary">
               <h3>Total: ₹{total}</h3>
-              <button
-                className="checkout-btn"
-                onClick={() => setShowCheckout(true)}
-              >
+
+              {/* Only ONE checkout button */}
+              <button className="checkout-btn" onClick={handleCheckoutClick}>
                 Proceed to Checkout
               </button>
             </div>

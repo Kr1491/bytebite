@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "../index.css";
+import FakeRazorpay from "./FakeRazorpay";
+import OrderSuccess from "./OrderSuccess";
 
 const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
+
+  const [showRazorpay, setShowRazorpay] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handlePayment = async () => {
     try {
@@ -19,11 +24,10 @@ const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
         return;
       }
 
-      // FIX: Ensure qty exists
       const items = cart.map(item => ({
         name: item.name,
         price: item.price,
-        qty: item.qty ?? 1   // fallback if qty missing
+        qty: item.qty ?? 1
       }));
 
       const payload = {
@@ -37,9 +41,12 @@ const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
 
       await axios.post("http://localhost:5001/api/orders", payload);
 
-      alert("Order placed successfully!");
+      // ❌ REMOVE OLD ALERT
+      // alert("Order placed successfully!");
+
       clearCart();
-      onClose();
+      setShowRazorpay(false);   // close razorpay
+      setShowSuccess(true);     // show success animation
 
     } catch (error) {
       console.error("Order Error:", error.response?.data || error);
@@ -74,10 +81,29 @@ const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
         </div>
 
         <div className="checkout-footer">
-          <button className="pay-btn" onClick={handlePayment}>
+          <button className="pay-btn" onClick={() => setShowRazorpay(true)}>
             Pay Now
           </button>
         </div>
+
+        {/* Razorpay Popup */}
+        {showRazorpay && (
+          <FakeRazorpay
+            amount={total + 20}
+            onSuccess={handlePayment}
+            onCancel={() => setShowRazorpay(false)}
+          />
+        )}
+
+        {/* Success Popup */}
+        {showSuccess && (
+          <OrderSuccess
+            onClose={() => {
+              setShowSuccess(false);
+              onClose(); // close checkout modal
+            }}
+          />
+        )}
 
       </div>
     </div>

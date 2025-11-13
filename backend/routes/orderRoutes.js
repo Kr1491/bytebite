@@ -17,6 +17,7 @@ router.post("/", async (req, res) => {
       subtotal: total,
       deliveryFee: deliveryFee ?? 20,
       finalAmount: total + (deliveryFee ?? 20),
+      status: "Paid"
     });
 
     await order.save();

@@ -1,0 +1,68 @@
+.rzp-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rzp-box {
+  width: 350px;
+  padding: 25px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.rzp-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0b72e7;
+}
+
+.rzp-tagline {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.rzp-amount-box {
+  padding: 10px;
+  margin: 15px 0;
+  background: #f3f7ff;
+  border-radius: 10px;
+}
+
+.rzp-pay-btn {
+  width: 100%;
+  padding: 12px;
+  background: #0b72e7;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.rzp-cancel-btn {
+  width: 100%;
+  padding: 10px;
+  background: #ddd;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}

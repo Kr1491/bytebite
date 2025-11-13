@@ -16,6 +16,7 @@ const App = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [cart, setCart] = useState([]);
 
+  // Fetch restaurant list
   useEffect(() => {
     axios
       .get("http://localhost:5001/api/restaurants")
@@ -23,9 +24,13 @@ const App = () => {
       .catch((err) => console.error("Error fetching restaurants:", err));
   }, []);
 
+  // Add item to cart
   const handleAddToCart = (item) => {
     setCart([...cart, item]);
   };
+
+  // Clear cart after order
+  const clearCart = () => setCart([]);
 
   return (
     <>
@@ -33,10 +38,13 @@ const App = () => {
         onCartClick={() => setShowCart(true)}
         onLoginClick={() => setShowAuth(true)}
       />
+
       <HeroSection />
+
       <section className="restaurants-section">
         <h2>Available Restaurants</h2>
         <p>Choose from our partnered food outlets</p>
+
         <div className="restaurant-grid">
           {restaurants.map((r) => (
             <RestaurantCard
@@ -51,14 +59,25 @@ const App = () => {
         </div>
       </section>
 
+      {/* CART */}
       {showCart && (
         <CartDrawer
           cart={cart}
-          clearCart={() => setCart([])}
+          clearCart={clearCart}
           onClose={() => setShowCart(false)}
         />
       )}
-      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+
+      {/* LOGIN / SIGNUP */}
+      {showAuth && (
+        <AuthModal
+          onClose={() => {
+            setShowAuth(false);
+          }}
+        />
+      )}
+
+      {/* MENU MODAL */}
       {showMenu && (
         <MenuModal
           restaurant={selectedRestaurant}
