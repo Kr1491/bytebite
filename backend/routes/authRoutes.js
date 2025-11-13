@@ -19,7 +19,12 @@ router.post("/signup", async (req, res) => {
     const user = new User({ name, email, password });
     await user.save();
 
-    res.status(201).json({ message: "Signup successful", user });
+    res.status(201).json({
+      message: "Signup successful",
+      name: user.name,
+      email: user.email
+    });
+
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).json({ message: "Server error during signup" });
@@ -36,7 +41,6 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Missing credentials" });
     }
 
-    // Normalize
     email = email.trim().toLowerCase();
     password = password.trim();
 
@@ -50,13 +54,16 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Wrong password" });
     }
 
-    return res.json({ message: "Login successful", user });
+    return res.json({
+      message: "Login successful",
+      name: user.name,
+      email: user.email
+    });
 
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ message: "Server error during login" });
   }
 });
-
 
 export default router;
