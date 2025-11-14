@@ -3,6 +3,7 @@ import axios from "axios";
 import "../index.css";
 import FakeRazorpay from "./FakeRazorpay";
 import OrderSuccess from "./OrderSuccess";
+import "./CheckoutModal.css";
 
 const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
 

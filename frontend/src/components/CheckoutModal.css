@@ -1,0 +1,107 @@
+/* Overlay background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Slide-up modal */
+.checkout-modal {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px 20px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(70px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Title */
+.checkout-modal h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  text-align: left;
+}
+
+/* Subtitle */
+.checkout-desc {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+/* Checkout rows */
+.checkout-summary {
+  background: #f8f8f8;
+  padding: 18px;
+  border-radius: 12px;
+}
+
+.checkout-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.checkout-row.total {
+  font-size: 17px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* Pay Now Button */
+.pay-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(45deg, #ff6a00, #ff3d00);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pay-btn:hover {
+  opacity: 0.85;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 19px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: black;
+}
