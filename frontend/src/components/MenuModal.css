@@ -1,0 +1,104 @@
+/* Background blur overlay */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.menu-modal {
+  background: white;
+  width: 420px;
+  max-width: 90%;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  position: relative;
+  animation: popup 0.3s ease;
+  z-index: 2000;
+}
+
+/* Popup animation */
+@keyframes popup {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Close button */
+.menu-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #444;
+  z-index: 3000;
+  padding: 0 4px;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.menu-close-btn:hover {
+  background: #eee;
+}
+
+/* Title */
+.menu-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Each menu item row */
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+/* Left text */
+.menu-text h4 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.menu-text p {
+  font-size: 15px;
+  margin: 4px 0 0;
+  color: #555;
+}
+
+/* Add button */
+.menu-add-btn {
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.menu-add-btn:hover {
+  opacity: 0.85;
+}
