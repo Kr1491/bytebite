@@ -13,27 +13,27 @@ import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 
 // -------------------------
-// 1️⃣ Create app FIRST
+// PATH FIX - REQUIRED FOR STATIC FILES
 // -------------------------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 // -------------------------
-// 2️⃣ Middleware
+// Middleware
 // -------------------------
 app.use(cors());
 app.use(express.json());
 
 // -------------------------
-// 3️⃣ Paths (for images folder)
+// STATIC IMAGES FIX 🚨
 // -------------------------
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve images
 app.use("/images", express.static(path.join(__dirname, "public/images")));
+// Now http://localhost:5001/images/hornbill.jpeg works
 
 // -------------------------
-// 4️⃣ Routes
+// Routes
 // -------------------------
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/cart", cartRoutes);
@@ -41,7 +41,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/auth", authRoutes);
 
 // -------------------------
-// 5️⃣ MongoDB Connection
+// MongoDB Connection
 // -------------------------
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://localhost:27017/bytebite", {
@@ -52,14 +52,14 @@ mongoose
   .catch((err) => console.error("❌ MongoDB error:", err));
 
 // -------------------------
-// 6️⃣ Base route
+// Base route
 // -------------------------
 app.get("/", (req, res) => {
   res.send("ByteBite API running...");
 });
 
 // -------------------------
-// 7️⃣ Start Server
+// Start Server
 // -------------------------
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

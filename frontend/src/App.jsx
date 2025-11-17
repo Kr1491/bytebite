@@ -48,9 +48,11 @@ const App = () => {
   return (
     <>
       <Header
-        onCartClick={() => setShowCart(true)}
-        onLoginClick={() => setShowAuth(true)}
+      onCartClick={() => setShowCart(true)}
+      onLoginClick={() => setShowAuth(true)}
+      cartCount={cart.length}   // 🔥 add this
       />
+
 
       <HeroSection />
 

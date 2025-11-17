@@ -1,26 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../index.css";
 
-const Header = ({ onCartClick, onLoginClick }) => {
-  const [userName, setUserName] = useState(null);
-  const [openMenu, setOpenMenu] = useState(false);
-
-  useEffect(() => {
-    const name = localStorage.getItem("userName");
-    if (name) setUserName(name);
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userEmail");
-    setUserName(null);
-    setOpenMenu(false);
-    window.location.reload();
-  };
+const Header = ({ onCartClick, onLoginClick, cartCount }) => {
+  const userName = localStorage.getItem("userName");
 
   return (
     <header className="header">
-      {/* LOGO */}
       <div className="logo">
         <img src="/logo.png" alt="Byte Bite" className="logo-img" />
         <div>
@@ -29,37 +14,28 @@ const Header = ({ onCartClick, onLoginClick }) => {
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
-      <div className="header-right">
+      <div className="header-icons">
 
-        {/* USER SECTION */}
+        {/* User Profile */}
         {userName ? (
-          <div className="user-section">
-            <span
-              className="user-name"
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              Hi, {userName} ▾
-            </span>
-
-            {openMenu && (
-              <div className="dropdown-menu">
-                <button className="dropdown-item" onClick={handleLogout}>
-                  🚪 Logout
-                </button>
-              </div>
-            )}
-          </div>
+          <div className="user-chip">Hi, {userName.split(" ")[0]}</div>
         ) : (
           <button className="icon-btn" title="Login" onClick={onLoginClick}>
-            👤 Login
+            👤
           </button>
         )}
 
-        {/* CART ICON */}
-        <button className="icon-btn" title="Cart" onClick={onCartClick}>
-          🛒
-        </button>
+        {/* Cart Icon with Badge */}
+        <div className="cart-wrapper">
+          <button className="icon-btn" title="Cart" onClick={onCartClick}>
+            🛒
+          </button>
+
+          {cartCount > 0 && (
+            <span className="cart-badge">{cartCount}</span>
+          )}
+        </div>
+
       </div>
     </header>
   );

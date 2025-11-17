@@ -4,10 +4,11 @@ const RestaurantCard = ({ restaurant, onViewMenu }) => {
   return (
     <div className="restaurant-card">
       <div className="rating-badge">⭐ {restaurant.rating}</div>
-      <img
-        src={`http://localhost:5001${restaurant.imagePath}`}
-        alt={restaurant.name}
-      />
+      <img src={`http://localhost:5001${restaurant.imagePath.startsWith("/") ? restaurant.imagePath : "/" + restaurant.imagePath}`}
+  alt={restaurant.name}
+  className="restaurant-image"
+/>
+
       <div className="card-body">
         <h3>{restaurant.name}</h3>
         <p>{restaurant.cuisine}</p>
