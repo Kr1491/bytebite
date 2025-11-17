@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
+import "./components/RestaurantList.css";
 import RestaurantCard from "./components/RestaurantCard";
 import CartDrawer from "./components/CartDrawer";
 import AuthModal from "./components/AuthModal";
@@ -50,7 +51,7 @@ const App = () => {
       <Header
       onCartClick={() => setShowCart(true)}
       onLoginClick={() => setShowAuth(true)}
-      cartCount={cart.length}   // 🔥 add this
+      cartCount={cart.length} 
       />
 
 

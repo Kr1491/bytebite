@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../index.css";
 import "./MenuModal.css";
 
 const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose }) => {
@@ -15,11 +14,9 @@ const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose })
       .catch((err) => console.error("Error loading menu:", err));
   }, [restaurant]);
 
-  // ❗ Quantities derived from GLOBAL CART — no reset issues
+  // Quantities from CART
   const quantities = cart.reduce((acc, item) => {
-    if (item._id) {
-      acc[item._id] = (acc[item._id] || 0) + 1;
-    }
+    if (item._id) acc[item._id] = (acc[item._id] || 0) + 1;
     return acc;
   }, {});
 
@@ -35,24 +32,20 @@ const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose })
         <ul className="menu-list">
           {menu.map((item) => (
             <li key={item._id} className="menu-item">
-              <div className="menu-item-info">
-                <span className="item-name">{item.name}</span>
-                <span className="item-price">₹{item.price}</span>
+
+              {/* LEFT SIDE — Name + Price */}
+              <div className="menu-item-left">
+                <span className="menu-item-name">{item.name}</span>
+                <span className="menu-item-price">₹{item.price}</span>
               </div>
 
+              {/* RIGHT SIDE — Add / Quantity */}
               <div className="menu-item-action">
                 {quantities[item._id] ? (
                   <div className="qty-control">
-
-                    {/* Remove Button */}
                     <button onClick={() => onRemoveFromCart(item)}>-</button>
-
-                    {/* Quantity */}
                     <span>{quantities[item._id]}</span>
-
-                    {/* Add Button */}
                     <button onClick={() => onAddToCart(item)}>+</button>
-
                   </div>
                 ) : (
                   <button className="add-btn" onClick={() => onAddToCart(item)}>
@@ -60,6 +53,7 @@ const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose })
                   </button>
                 )}
               </div>
+
             </li>
           ))}
         </ul>

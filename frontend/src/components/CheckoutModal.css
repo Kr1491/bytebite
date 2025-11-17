@@ -105,3 +105,11 @@
 .close-btn:hover {
   color: black;
 }
+
+.checkout-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+}

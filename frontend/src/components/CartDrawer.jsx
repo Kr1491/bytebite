@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import CheckoutModal from "./CheckoutModal";
 import "../index.css";
+import "./CartDrawer.css";
+
 
 const CartDrawer = ({ cart, setCart, clearCart, onClose }) => {
   const [showCheckout, setShowCheckout] = useState(false);

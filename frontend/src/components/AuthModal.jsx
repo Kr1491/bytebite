@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./AuthModal.css";
 
+
 const AuthModal = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
 
