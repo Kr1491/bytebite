@@ -1,87 +1,126 @@
+/* Overlay */
 .success-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 3000;
+  animation: fadeIn 0.25s ease-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Success Box */
 .success-box {
   background: #fff;
-  padding: 30px;
-  width: 350px;
+  padding: 32px;
+  width: 360px;
   text-align: center;
-  border-radius: 15px;
-  animation: pop 0.3s ease;
+  border-radius: 18px;
+  animation: popUp 0.3s ease-out;
 }
 
-@keyframes pop {
-  from { transform: scale(0.8); opacity: 0; }
+@keyframes popUp {
+  from { transform: scale(0.85); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Checkmark Animation */
+/* Checkmark Container */
 .checkmark {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin: 0 auto 20px;
   position: relative;
 }
 
+/* Green Circle */
 .checkmark-circle {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   background: #4CAF50;
   border-radius: 50%;
-  animation: scaleCircle 0.4s ease forwards;
+  animation: circlePop 0.35s ease-out forwards;
+  transform: scale(0);
 }
 
-@keyframes scaleCircle {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+@keyframes circlePop {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
+/* Tick Stem */
 .checkmark-stem {
-  width: 5px;
-  height: 25px;
+  width: 6px;
+  height: 32px;
   background: #fff;
   position: absolute;
-  top: 35px;
-  left: 32px;
+  top: 38px;
+  left: 34px;
   transform: rotate(45deg);
-  animation: draw 0.3s 0.3s forwards ease-out;
+  border-radius: 3px;
   opacity: 0;
+  animation: drawTick 0.3s ease-out 0.32s forwards;
 }
 
+/* Tick Kick */
 .checkmark-kick {
-  width: 5px;
-  height: 45px;
+  width: 6px;
+  height: 55px;
   background: #fff;
   position: absolute;
-  top: 20px;
-  left: 45px;
+  top: 18px;
+  left: 50px;
   transform: rotate(-45deg);
-  animation: draw 0.3s 0.3s forwards ease-out;
+  border-radius: 3px;
   opacity: 0;
+  animation: drawTick 0.3s ease-out 0.38s forwards;
 }
 
-@keyframes draw {
-  to { opacity: 1; }
+@keyframes drawTick {
+  from { transform: scale(0) rotate(var(--angle)); opacity: 0; }
+  to { transform: scale(1) rotate(var(--angle)); opacity: 1; }
 }
 
+/* Success Button */
 .success-btn {
-  margin-top: 15px;
+  margin-top: 18px;
   background: #4CAF50;
   color: white;
-  padding: 12px 15px;
+  padding: 14px 15px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
   width: 100%;
   font-size: 16px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.success-btn:hover {
+  background: #43a047;
+}
+
+/* Title / Subtitle */
+.success-box h2 {
+  margin-bottom: 10px;
+  font-size: 23px;
+  font-weight: 700;
+  color: #222;
+}
+
+.success-box p {
+  margin: 0;
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 20px;
 }

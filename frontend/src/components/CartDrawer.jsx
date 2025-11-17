@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import CheckoutModal from "./CheckoutModal";
 import "../index.css";
 
-const CartDrawer = ({ cart, clearCart, onClose }) => {
+const CartDrawer = ({ cart, setCart, clearCart, onClose }) => {
   const [showCheckout, setShowCheckout] = useState(false);
 
-  // Group cart items
+  // Group items by ID
   const grouped = cart.reduce((acc, item) => {
-    const key = item._id || item.name;
+    const key = item._id;
     if (!acc[key]) acc[key] = { ...item, qty: 0 };
     acc[key].qty += 1;
     return acc;
@@ -15,15 +15,23 @@ const CartDrawer = ({ cart, clearCart, onClose }) => {
 
   const items = Object.values(grouped);
 
-  // Calculate total
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
-  const handleCheckoutClick = () => {
-    if (!localStorage.getItem("userEmail")) {
-      alert("Please login first");
-      return;
-    }
-    setShowCheckout(true);
+  // Increase qty (add another copy)
+  const increaseQty = (item) => {
+    setCart((prev) => [...prev, item]); // add one more
+  };
+
+  // Decrease qty (remove one copy)
+  const decreaseQty = (item) => {
+    setCart((prev) => {
+      const index = prev.findIndex((i) => i._id === item._id);
+      if (index === -1) return prev;
+
+      const newCart = [...prev];
+      newCart.splice(index, 1);
+      return newCart;
+    });
   };
 
   return (
@@ -42,24 +50,38 @@ const CartDrawer = ({ cart, clearCart, onClose }) => {
         ) : (
           <div className="cart-items">
             {items.map((item) => (
-              <div key={item._id || item.name} className="cart-item">
+              <div key={item._id} className="cart-item">
+
                 <div className="cart-item-info">
                   <h4>{item.name}</h4>
-                  <p>
-                    ₹{item.price} × {item.qty}
-                  </p>
+                  <p>₹{item.price}</p>
                 </div>
+
+                <div className="cart-controls">
+                  <button onClick={() => decreaseQty(item)}>-</button>
+                  <span>{item.qty}</span>
+                  <button onClick={() => increaseQty(item)}>+</button>
+                </div>
+
                 <span className="cart-item-total">
                   ₹{item.price * item.qty}
                 </span>
+
               </div>
             ))}
 
             <div className="cart-summary">
               <h3>Total: ₹{total}</h3>
-
-              {/* Only ONE checkout button */}
-              <button className="checkout-btn" onClick={handleCheckoutClick}>
+              <button
+                className="checkout-btn"
+                onClick={() => {
+                  if (!localStorage.getItem("userEmail")) {
+                    alert("Please login first");
+                    return;
+                  }
+                  setShowCheckout(true);
+                }}
+              >
                 Proceed to Checkout
               </button>
             </div>
@@ -70,7 +92,7 @@ const CartDrawer = ({ cart, clearCart, onClose }) => {
       {showCheckout && (
         <CheckoutModal
           total={total}
-          cart={cart}
+          cart={items}
           clearCart={clearCart}
           onClose={() => setShowCheckout(false)}
         />

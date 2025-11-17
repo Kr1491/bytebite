@@ -14,6 +14,8 @@ const App = () => {
   const [showAuth, setShowAuth] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
+
+  // GLOBAL CART STATE
   const [cart, setCart] = useState([]);
 
   // Fetch restaurant list
@@ -24,9 +26,20 @@ const App = () => {
       .catch((err) => console.error("Error fetching restaurants:", err));
   }, []);
 
-  // Add item to cart
+  // Add item to cart (one quantity added)
   const handleAddToCart = (item) => {
-    setCart([...cart, item]);
+    setCart((prev) => [...prev, item]);
+  };
+
+  // Remove one quantity of an item
+  const handleRemoveFromCart = (item) => {
+    setCart((prev) => {
+      const index = prev.findIndex((i) => i._id === item._id);
+      if (index === -1) return prev;
+      const updated = [...prev];
+      updated.splice(index, 1);
+      return updated;
+    });
   };
 
   // Clear cart after order
@@ -59,16 +72,17 @@ const App = () => {
         </div>
       </section>
 
-      {/* CART */}
+      {/* CART DRAWER */}
       {showCart && (
         <CartDrawer
           cart={cart}
+          setCart={setCart}      // ADD THIS
           clearCart={clearCart}
           onClose={() => setShowCart(false)}
         />
       )}
 
-      {/* LOGIN / SIGNUP */}
+      {/* LOGIN MODAL */}
       {showAuth && (
         <AuthModal
           onClose={() => {
@@ -81,7 +95,9 @@ const App = () => {
       {showMenu && (
         <MenuModal
           restaurant={selectedRestaurant}
+          cart={cart}                  // <-- IMPORTANT (for showing correct qty)
           onAddToCart={handleAddToCart}
+          onRemoveFromCart={handleRemoveFromCart}
           onClose={() => setShowMenu(false)}
         />
       )}

@@ -3,9 +3,8 @@ import axios from "axios";
 import "../index.css";
 import "./MenuModal.css";
 
-const MenuModal = ({ restaurant, onAddToCart, onClose }) => {
+const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose }) => {
   const [menu, setMenu] = useState([]);
-  const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
     if (!restaurant?._id) return;
@@ -16,37 +15,20 @@ const MenuModal = ({ restaurant, onAddToCart, onClose }) => {
       .catch((err) => console.error("Error loading menu:", err));
   }, [restaurant]);
 
-  // Increase quantity
-  const handleAdd = (item) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [item._id]: (prev[item._id] || 0) + 1,
-    }));
-    onAddToCart(item);
-  };
-
-  // Decrease quantity
-  const handleRemove = (item) => {
-    setQuantities((prev) => {
-      const newQty = (prev[item._id] || 0) - 1;
-
-      if (newQty <= 0) {
-        const { [item._id]: _, ...rest } = prev;
-        return rest;
-      }
-
-      return { ...prev, [item._id]: newQty };
-    });
-  };
+  // ❗ Quantities derived from GLOBAL CART — no reset issues
+  const quantities = cart.reduce((acc, item) => {
+    if (item._id) {
+      acc[item._id] = (acc[item._id] || 0) + 1;
+    }
+    return acc;
+  }, {});
 
   return (
     <div className="menu-overlay">
       <div className="menu-modal">
 
         {/* Close Button */}
-        <button className="menu-close-btn" onClick={onClose}>
-          ✖
-        </button>
+        <button className="menu-close-btn" onClick={onClose}>✖</button>
 
         <h2 className="menu-title">{restaurant.name} Menu</h2>
 
@@ -61,12 +43,19 @@ const MenuModal = ({ restaurant, onAddToCart, onClose }) => {
               <div className="menu-item-action">
                 {quantities[item._id] ? (
                   <div className="qty-control">
-                    <button onClick={() => handleRemove(item)}>-</button>
+
+                    {/* Remove Button */}
+                    <button onClick={() => onRemoveFromCart(item)}>-</button>
+
+                    {/* Quantity */}
                     <span>{quantities[item._id]}</span>
-                    <button onClick={() => handleAdd(item)}>+</button>
+
+                    {/* Add Button */}
+                    <button onClick={() => onAddToCart(item)}>+</button>
+
                   </div>
                 ) : (
-                  <button className="add-btn" onClick={() => handleAdd(item)}>
+                  <button className="add-btn" onClick={() => onAddToCart(item)}>
                     Add
                   </button>
                 )}
@@ -74,7 +63,6 @@ const MenuModal = ({ restaurant, onAddToCart, onClose }) => {
             </li>
           ))}
         </ul>
-
       </div>
     </div>
   );
