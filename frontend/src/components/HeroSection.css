@@ -1,11 +1,12 @@
 .hero {
   text-align: center;
-  background: linear-gradient(90deg, #7b2ff7 0%, #f107a3 100%);
+  background: linear-gradient(135deg, #00F5D4 0%, #00B3F4 50%, #0077FF 100%);
   color: white;
   padding: 70px 20px;
   border-radius: 0 0 40px 40px;
   margin-bottom: 40px;
 }
+
 
 .hero h1 {
   font-size: 42px;
