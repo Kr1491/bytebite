@@ -98,7 +98,7 @@
 }
 
 .add-btn {
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   border: none;
   padding: 6px 14px;
   color: white;
@@ -116,7 +116,7 @@
 }
 
 .qty-control button {
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   border: none;
   color: white;
   padding: 6px 12px;

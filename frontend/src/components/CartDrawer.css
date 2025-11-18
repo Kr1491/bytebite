@@ -91,7 +91,7 @@
 
 .checkout-btn {
   width: 100%;
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   border: none;
   color: white;
   font-size: 15px;
@@ -148,7 +148,7 @@
 .cart-controls button {
   width: 28px;
   height: 28px;
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   border: none;
   border-radius: 6px;
   font-size: 18px;
