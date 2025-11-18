@@ -16,10 +16,10 @@ const App = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
 
-  // GLOBAL CART STATE
+
   const [cart, setCart] = useState([]);
 
-  // Fetch restaurant list
+
   useEffect(() => {
     axios
       .get("http://localhost:5001/api/restaurants")
@@ -27,12 +27,10 @@ const App = () => {
       .catch((err) => console.error("Error fetching restaurants:", err));
   }, []);
 
-  // Add item to cart (one quantity added)
   const handleAddToCart = (item) => {
     setCart((prev) => [...prev, item]);
   };
 
-  // Remove one quantity of an item
   const handleRemoveFromCart = (item) => {
     setCart((prev) => {
       const index = prev.findIndex((i) => i._id === item._id);
@@ -43,7 +41,6 @@ const App = () => {
     });
   };
 
-  // Clear cart after order
   const clearCart = () => setCart([]);
 
   return (
@@ -75,17 +72,15 @@ const App = () => {
         </div>
       </section>
 
-      {/* CART DRAWER */}
       {showCart && (
         <CartDrawer
           cart={cart}
-          setCart={setCart}      // ADD THIS
+          setCart={setCart}     
           clearCart={clearCart}
           onClose={() => setShowCart(false)}
         />
       )}
 
-      {/* LOGIN MODAL */}
       {showAuth && (
         <AuthModal
           onClose={() => {
@@ -94,11 +89,10 @@ const App = () => {
         />
       )}
 
-      {/* MENU MODAL */}
       {showMenu && (
         <MenuModal
           restaurant={selectedRestaurant}
-          cart={cart}                  // <-- IMPORTANT (for showing correct qty)
+          cart={cart}                  
           onAddToCart={handleAddToCart}
           onRemoveFromCart={handleRemoveFromCart}
           onClose={() => setShowMenu(false)}

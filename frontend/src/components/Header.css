@@ -1,6 +1,3 @@
-/* ========================
-   HEADER WRAPPER
-======================== */
 .header {
   display: flex;
   justify-content: space-between;
@@ -8,15 +5,14 @@
   background: white;
   padding: 14px 40px;
   border-bottom: 1px solid #eee;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* ========================
-   LOGO LEFT SIDE
-======================== */
+/* ---------------- LOGO ---------------- */
+
 .logo {
   display: flex;
   align-items: center;
@@ -26,6 +22,8 @@
 .logo-img {
   width: 42px;
   height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .logo-text {
@@ -45,25 +43,70 @@
   margin: 0;
 }
 
-/* ========================
-   RIGHT SECTION
-======================== */
+/* ---------------- RIGHT SIDE ---------------- */
+
 .header-right {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-/* Username styling */
+/* Username chip */
 .user-name {
   font-size: 16px;
   font-weight: 500;
-  margin-right: 5px;
+  padding: 6px 12px;
+  background: rgba(26, 188, 156, 0.12);
+  border: 1px solid rgba(26, 188, 156, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
-/* ========================
-   CART ICON + BADGE
-======================== */
+.user-name:hover {
+  background: rgba(26, 188, 156, 0.18);
+}
+
+/* ---------------- DROPDOWN MENU ---------------- */
+
+.user-menu-container {
+  position: relative;
+}
+
+.logout-dropdown {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  background: white;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 120px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.15s ease-out;
+  z-index: 2000;
+}
+
+.logout-dropdown button {
+  background: transparent;
+  border: none;
+  color: #d32f2f;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logout-dropdown button:hover {
+  opacity: 0.7;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- CART ---------------- */
+
 .cart-wrapper {
   position: relative;
   display: flex;
@@ -74,14 +117,18 @@
 .cart-icon {
   font-size: 26px;
   color: #444;
+  transition: 0.12s ease-in-out;
 }
 
-/* badge over the cart icon */
+.cart-wrapper:hover .cart-icon {
+  transform: scale(1.1);
+}
+
 .cart-badge {
   position: absolute;
   top: -6px;
   right: -10px;
-  background: #ff5722;
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   color: white;
   padding: 2px 6px;
   border-radius: 50%;
@@ -92,8 +139,16 @@
   text-align: center;
 }
 
-/* hover animation */
-.cart-wrapper:hover .cart-icon {
-  transform: scale(1.1);
-  transition: 0.12s ease-in-out;
+/* Login button (icon-btn) */
+.icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.icon-btn:hover {
+  background: rgba(26, 188, 156, 0.12);
 }

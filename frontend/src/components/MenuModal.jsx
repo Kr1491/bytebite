@@ -14,7 +14,6 @@ const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose })
       .catch((err) => console.error("Error loading menu:", err));
   }, [restaurant]);
 
-  // Quantities from CART
   const quantities = cart.reduce((acc, item) => {
     if (item._id) acc[item._id] = (acc[item._id] || 0) + 1;
     return acc;
@@ -24,7 +23,6 @@ const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose })
     <div className="menu-overlay">
       <div className="menu-modal">
 
-        {/* Close Button */}
         <button className="menu-close-btn" onClick={onClose}>✖</button>
 
         <h2 className="menu-title">{restaurant.name} Menu</h2>
@@ -33,13 +31,11 @@ const MenuModal = ({ restaurant, cart, onAddToCart, onRemoveFromCart, onClose })
           {menu.map((item) => (
             <li key={item._id} className="menu-item">
 
-              {/* LEFT SIDE — Name + Price */}
               <div className="menu-item-left">
                 <span className="menu-item-name">{item.name}</span>
                 <span className="menu-item-price">₹{item.price}</span>
               </div>
 
-              {/* RIGHT SIDE — Add / Quantity */}
               <div className="menu-item-action">
                 {quantities[item._id] ? (
                   <div className="qty-control">

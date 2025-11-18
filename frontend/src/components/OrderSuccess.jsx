@@ -6,7 +6,6 @@ const OrderSuccess = ({ onClose }) => {
     <div className="success-overlay">
       <div className="success-box">
 
-        {/* SVG Checkmark */}
         <div className="success-icon">
           <svg width="85" height="85" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" fill="#4CAF50" />

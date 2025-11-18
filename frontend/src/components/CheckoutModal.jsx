@@ -41,12 +41,10 @@ const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
 
       await axios.post("http://localhost:5001/api/orders", payload);
 
-      // ❌ REMOVE OLD ALERT
-      // alert("Order placed successfully!");
 
       clearCart();
-      setShowRazorpay(false);   // close razorpay
-      setShowSuccess(true);     // show success animation
+      setShowRazorpay(false);   
+      setShowSuccess(true);    
 
     } catch (error) {
       console.error("Order Error:", error.response?.data || error);
@@ -86,7 +84,6 @@ const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
           </button>
         </div>
 
-        {/* Razorpay Popup */}
         {showRazorpay && (
           <FakeRazorpay
             amount={total + 20}
@@ -95,12 +92,11 @@ const CheckoutModal = ({ total, cart, onClose, clearCart }) => {
           />
         )}
 
-        {/* Success Popup */}
         {showSuccess && (
           <OrderSuccess
             onClose={() => {
               setShowSuccess(false);
-              onClose(); // close checkout modal
+              onClose(); 
             }}
           />
         )}

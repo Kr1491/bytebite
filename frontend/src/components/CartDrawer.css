@@ -1,6 +1,4 @@
-/* ========================
-   Drawer (Cart)
-======================== */
+
 .drawer-overlay {
   position: fixed;
   inset: 0;
@@ -93,7 +91,7 @@
 
 .checkout-btn {
   width: 100%;
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   border: none;
   color: white;
   font-size: 15px;
@@ -132,9 +130,6 @@
   border-radius: 10px;
 }
 
-/* ========================
-   Cart Item Total (Price)
-========================= */
 .cart-item-total {
   font-size: 16px;
   font-weight: 600;
@@ -143,9 +138,7 @@
   text-align: right;
 }
 
-/* ========================
-   Quantity Controls
-========================= */
+
 .cart-controls {
   display: flex;
   align-items: center;
@@ -155,7 +148,7 @@
 .cart-controls button {
   width: 28px;
   height: 28px;
-  background: linear-gradient(90deg, #7b2ff7, #f107a3);
+  background: linear-gradient(90deg, #1abc9c, #2980b9);
   border: none;
   border-radius: 6px;
   font-size: 18px;
