@@ -1,4 +1,4 @@
-/* Background blur overlay */
+
 .menu-overlay {
   position: fixed;
   inset: 0;
@@ -10,7 +10,7 @@
   z-index: 1000;
 }
 
-/* Modal container */
+
 .menu-modal {
   background: white;
   width: 420px;
@@ -23,7 +23,7 @@
   z-index: 2000;
 }
 
-/* Popup animation */
+
 @keyframes popup {
   from {
     transform: scale(0.9);
@@ -35,7 +35,6 @@
   }
 }
 
-/* Close button */
 .menu-close-btn {
   position: absolute;
   top: 12px;
@@ -54,21 +53,20 @@
   background: #eee;
 }
 
-/* Title */
+
 .menu-title {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 20px;
 }
 
-/* List */
+
 .menu-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Each menu row */
 .menu-item {
   display: flex;
   justify-content: space-between;
@@ -81,7 +79,6 @@
   border-bottom: none;
 }
 
-/* LEFT side */
 .menu-item-left {
   display: flex;
   flex-direction: column;
@@ -100,7 +97,6 @@
   font-weight: 500;
 }
 
-/* RIGHT side */
 .add-btn {
   background: linear-gradient(90deg, #7b2ff7, #f107a3);
   border: none;

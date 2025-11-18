@@ -1,4 +1,4 @@
-/* Overlay */
+
 .success-overlay {
   position: fixed;
   top: 0;
@@ -19,7 +19,7 @@
   to { opacity: 1; }
 }
 
-/* Success Box */
+
 .success-box {
   background: #fff;
   padding: 32px;
@@ -34,7 +34,7 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Checkmark Container */
+
 .checkmark {
   width: 90px;
   height: 90px;
@@ -42,7 +42,7 @@
   position: relative;
 }
 
-/* Green Circle */
+
 .checkmark-circle {
   width: 90px;
   height: 90px;
@@ -58,7 +58,7 @@
   100% { transform: scale(1); }
 }
 
-/* Tick Stem */
+
 .checkmark-stem {
   width: 6px;
   height: 32px;
@@ -72,7 +72,6 @@
   animation: drawTick 0.3s ease-out 0.32s forwards;
 }
 
-/* Tick Kick */
 .checkmark-kick {
   width: 6px;
   height: 55px;
@@ -91,7 +90,6 @@
   to { transform: scale(1) rotate(var(--angle)); opacity: 1; }
 }
 
-/* Success Button */
 .success-btn {
   margin-top: 18px;
   background: #4CAF50;
@@ -110,7 +108,6 @@
   background: #43a047;
 }
 
-/* Title / Subtitle */
 .success-box h2 {
   margin-bottom: 10px;
   font-size: 23px;

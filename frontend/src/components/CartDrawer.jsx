@@ -7,7 +7,6 @@ import "./CartDrawer.css";
 const CartDrawer = ({ cart, setCart, clearCart, onClose }) => {
   const [showCheckout, setShowCheckout] = useState(false);
 
-  // Group items by ID
   const grouped = cart.reduce((acc, item) => {
     const key = item._id;
     if (!acc[key]) acc[key] = { ...item, qty: 0 };
@@ -19,12 +18,10 @@ const CartDrawer = ({ cart, setCart, clearCart, onClose }) => {
 
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
-  // Increase qty (add another copy)
   const increaseQty = (item) => {
-    setCart((prev) => [...prev, item]); // add one more
+    setCart((prev) => [...prev, item]); 
   };
 
-  // Decrease qty (remove one copy)
   const decreaseQty = (item) => {
     setCart((prev) => {
       const index = prev.findIndex((i) => i._id === item._id);

@@ -6,8 +6,6 @@ const Header = ({ onCartClick, onLoginClick, cartCount }) => {
 
   return (
     <header className="header">
-      
-      {/* ========== LEFT LOGO ========== */}
       <div className="logo">
         <img src="/logo.png" alt="Byte Bite" className="logo-img" />
         <div className="logo-text">
@@ -16,10 +14,8 @@ const Header = ({ onCartClick, onLoginClick, cartCount }) => {
         </div>
       </div>
 
-      {/* ========== RIGHT SECTION ========== */}
       <div className="header-right">
 
-        {/* Username / Login Button */}
         {userName ? (
           <div className="user-name">Hi, {userName.split(" ")[0]}</div>
         ) : (
@@ -28,7 +24,6 @@ const Header = ({ onCartClick, onLoginClick, cartCount }) => {
           </button>
         )}
 
-        {/* Cart Icon + Badge */}
         <div className="cart-wrapper" onClick={onCartClick}>
           <span className="cart-icon">🛒</span>
 

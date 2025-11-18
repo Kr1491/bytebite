@@ -1,6 +1,4 @@
-/* ========================
-   HEADER WRAPPER
-======================== */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -14,9 +12,6 @@
   z-index: 1000;
 }
 
-/* ========================
-   LOGO LEFT SIDE
-======================== */
 .logo {
   display: flex;
   align-items: center;
@@ -45,25 +40,19 @@
   margin: 0;
 }
 
-/* ========================
-   RIGHT SECTION
-======================== */
+
 .header-right {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-/* Username styling */
 .user-name {
   font-size: 16px;
   font-weight: 500;
   margin-right: 5px;
 }
 
-/* ========================
-   CART ICON + BADGE
-======================== */
 .cart-wrapper {
   position: relative;
   display: flex;
@@ -76,7 +65,6 @@
   color: #444;
 }
 
-/* badge over the cart icon */
 .cart-badge {
   position: absolute;
   top: -6px;
@@ -92,7 +80,6 @@
   text-align: center;
 }
 
-/* hover animation */
 .cart-wrapper:hover .cart-icon {
   transform: scale(1.1);
   transition: 0.12s ease-in-out;
